@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personal Expense Calculator</title>
+
+<style>
+body{font-family:Arial;background:#f2f2f2;text-align:center;padding:20px}
+.box{background:white;padding:20px;max-width:500px;margin:auto;border-radius:10px}
+input,select,button{padding:10px;margin:6px;width:90%}
+button{background:#007bff;color:white;border:0;border-radius:5px}
+table{width:100%;margin-top:15px;border-collapse:collapse}
+th,td{padding:8px;border:1px solid #ddd}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Personal Expense Calculator</h2>
+
+<input id="income" type="number" placeholder="Enter Income ₹">
+
+<input id="name" placeholder="Expense Name">
+<input id="amount" type="number" placeholder="Expense Amount ₹">
+
+<select id="category">
+<option>Food</option>
+<option>Transport</option>
+<option>Education</option>
+<option>Shopping</option>
+<option>Entertainment</option>
+<option>Other</option>
+</select>
+
+<button onclick="add()">Add Expense</button>
+
+<table>
+<tr><th>Expense</th><th>Category</th><th>Amount</th></tr>
+<tbody id="list"></tbody>
+</table>
+
+<h3>Summary Report</h3>
+<p>Total Income: ₹<span id="inc">0</span></p>
+<p>Total Expenses: ₹<span id="exp">0</span></p>
+<p>Savings: ₹<span id="save">0</span></p>
+<p id="cat"></p>
+
+</div>
+
+<script>
+let total=0,c={};
+
+function add(){
+ let n=document.getElementById("name").value;
+ let a=+document.getElementById("amount").value;
+ let k=document.getElementById("category").value;
+ let i=+document.getElementById("income").value||0;
+
+ if(!n||a<=0){alert("Enter expense details");return}
+
+ total+=a;
+ c[k]=(c[k]||0)+a;
+
+ document.getElementById("list").innerHTML+=
+ `<tr><td>${n}</td><td>${k}</td><td>₹${a}</td></tr>`;
+
+ document.getElementById("inc").innerText=i;
+ document.getElementById("exp").innerText=total;
+ document.getElementById("save").innerText=i-total;
+
+ document.getElementById("cat").innerHTML=
+ Object.entries(c).map(x=>x[0]+": ₹"+x[1]).join("<br>");
+
+ document.getElementById("name").value="";
+ document.getElementById("amount").value="";
+}
+</script>
+
+</body>
+</html>
